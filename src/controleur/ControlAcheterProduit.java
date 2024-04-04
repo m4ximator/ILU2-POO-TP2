@@ -16,11 +16,9 @@ public class ControlAcheterProduit {
 		this.controlVerifierIdentite = controlVerifierIdentite;
 		this.controlTrouverEtalVendeur = controlTrouverEtalVendeur;
 	}
-	public boolean isMarcheProduit(String produit) {
-		Gaulois [] vendeurProduit=village.rechercherVendeursProduit(produit);
-		return vendeurProduit!=null;
-			
-			
+	public  Gaulois [] VendeurProduit(String produit) {
+		return village.rechercherVendeursProduit(produit);
+				
 	}
 	public boolean isFromVillage(String nomVillageois) {
 		return controlVerifierIdentite.verifierIdentite(nomVillageois);
@@ -28,5 +26,8 @@ public class ControlAcheterProduit {
 	public Etal trouverEtalVendeur(String nomVendeur) {
 		return controlTrouverEtalVendeur.trouverEtalVendeur(nomVendeur);
 		
+	}
+	public int  acheterProduit(String nomVendeur,int quantity) {
+			return trouverEtalVendeur(nomVendeur).acheterProduit(quantity);
 	}
 }

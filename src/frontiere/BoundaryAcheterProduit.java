@@ -14,20 +14,38 @@ public class BoundaryAcheterProduit {
 	}
 
 	public void acheterProduit(String nomAcheteur) {
-		int choix=Clavier.entrerEntier("1- je veux acheter un produit.\n 2- je veux avoir une vue d'ensemble du marché\n 3- quitter l'application " );
-		if (choix==1) {
-			StringBuilder chaine= new StringBuilder();
-			if(!(controlAcheterProduit.isFromVillage(nomAcheteur))) {
-				chaine.append("Je suis desole "+ nomAcheteur+ " mais il faut etre un habitant du village pour commercer ici");
+		StringBuilder chaine = new StringBuilder();
+		Gaulois[] vendeurs;
+
+			if (!(controlAcheterProduit.isFromVillage(nomAcheteur)))
+				chaine.append("Je suis desole " + nomAcheteur
+						+ " mais il faut etre un habitant du village pour commercer ici");
+			else {
+				String produit = Clavier.entrerChaine("Quel produit voulez-vous acheter ?\n");
+				vendeurs = controlAcheterProduit.VendeurProduit(produit);
+
+				if (vendeurs == null) {
+					chaine.append("Desole, personne ne vend ce produit au marche");
+				} else {
+					System.out.println("Chez quel commercant voulez-vous acheter?\n");
+					for (int i = 0; i < vendeurs.length; i++)
+						System.out.println((i + 1) + " - " + vendeurs[i]);
+					int choixVendeur = Clavier.entrerEntier("");
+					String nomVendeur = vendeurs[choixVendeur - 1].getNom();
+					if (!(controlAcheterProduit.isFromVillage(nomVendeur))) {
+						chaine.append("Je suis desole " + nomVendeur
+								+ " mais il faut etre un habitant du village pour commercer ici");
+					} else {
+						int nbProduit = Clavier.entrerEntier(
+								nomAcheteur + " se deplace jusqua letal du vendeur " + nomVendeur + "\nBonjour "
+										+ nomAcheteur + "\nCombien de " + produit + " voulez-vous acheter ?");
+						controlAcheterProduit.acheterProduit(nomVendeur, nbProduit);
+
+					}
+				}
 			}
-			String produit=Clavier.entrerChaine("Quel produit voulez-vous acheter ?");
-			Gaulois [] vendeur =controlAcheterProduit.isMarcheProduit(produit);
-			else if(vendeur==null) {
-				chaine.append("Desole, personne ne vend ce produit au marche");
-			}
-			else if() {
-				
-			}
-		}
+		
+		chaine.toString();
+
 	}
 }
